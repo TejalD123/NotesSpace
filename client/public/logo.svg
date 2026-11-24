@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <linearGradient id="blue-bg" x1="16" y1="16" x2="496" y2="496" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1D4ED8" />
+      <stop offset="50%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+    <linearGradient id="icon-mark" x1="128" y1="112" x2="384" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E0F2FE" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded-square blue app icon background -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#blue-bg)" />
+
+  <!-- Outer note outline with folded top-right corner -->
+  <path
+    d="M 168 112
+       H 278
+       C 288 112 297 116 304 123
+       L 373 192
+       C 380 199 384 208 384 218
+       V 350
+       C 384 377.6 361.6 400 334 400
+       H 178
+       C 150.4 400 128 377.6 128 350
+       V 152
+       C 128 129.9 145.9 112 168 112 Z"
+    stroke="url(#icon-mark)"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Inner folded corner crease -->
+  <path
+    d="M 284 114
+       V 186
+       C 284 201.5 296.5 214 312 214
+       H 382"
+    stroke="url(#icon-mark)"
+    stroke-width="24"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Connected knowledge nodes inside the note -->
+  <line
+    x1="216"
+    y1="226"
+    x2="296"
+    y2="306"
+    stroke="url(#icon-mark)"
+    stroke-width="24"
+    stroke-linecap="round"
+  />
+  <circle cx="216" cy="226" r="28" fill="url(#icon-mark)" />
+  <circle cx="296" cy="306" r="28" fill="url(#icon-mark)" />
+</svg>

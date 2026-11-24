@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <linearGradient id="notesspace-grad" x1="104" y1="104" x2="408" y2="408" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5B5AF7" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1CD8FF" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer note outline with folded top-right corner -->
+  <path
+    d="M 160 96
+       H 284
+       C 295 96 305 100 313 108
+       L 388 183
+       C 396 191 400 201 400 212
+       V 360
+       C 400 390.9 374.9 416 344 416
+       H 168
+       C 137.1 416 112 390.9 112 360
+       V 144
+       C 112 117.5 133.5 96 160 96 Z"
+    stroke="url(#notesspace-grad)"
+    stroke-width="32"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Inner folded corner crease -->
+  <path
+    d="M 290 98
+       V 178
+       C 290 194.6 303.4 208 320 208
+       H 398"
+    stroke="url(#notesspace-grad)"
+    stroke-width="28"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Connected knowledge nodes inside the note -->
+  <line
+    x1="212"
+    y1="224"
+    x2="300"
+    y2="312"
+    stroke="url(#notesspace-grad)"
+    stroke-width="26"
+    stroke-linecap="round"
+  />
+  <circle cx="212" cy="224" r="32" fill="url(#notesspace-grad)" />
+  <circle cx="300" cy="312" r="32" fill="url(#notesspace-grad)" />
+</svg>

@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --page: 247 247 253;
+  --surface: 255 255 255;
+  --tint: 240 239 251;
+  --line: 228 227 243;
+  --ink: 18 18 43;
+  --muted: 91 91 122;
+  --brand: 53 37 205;
+  --brand-soft: 236 233 255;
+  --brand-ink: 53 37 205;
+  --shadow: 40 30 120;
+
+  --key-bg: 238 244 255;  --key-bar: 59 130 246;  --key-ink: 30 58 138;
+  --tip-bg: 236 253 245;  --tip-bar: 16 185 129;  --tip-ink: 6 95 70;
+  --warn-bg: 254 242 240; --warn-bar: 239 68 68;  --warn-ink: 153 27 27;
+  --ex-bg: 245 240 255;   --ex-bar: 139 92 246;   --ex-ink: 91 33 182;
+  --mark: 255 238 140;
+}
+
+.dark {
+  --page: 14 14 26;
+  --surface: 23 23 42;
+  --tint: 31 31 56;
+  --line: 43 43 74;
+  --ink: 236 236 248;
+  --muted: 160 160 192;
+  --brand: 108 99 255;
+  --brand-soft: 41 38 92;
+  --brand-ink: 176 170 255;
+  --shadow: 0 0 0;
+
+  --key-bg: 23 37 70;  --key-bar: 96 165 250; --key-ink: 191 219 254;
+  --tip-bg: 12 48 40;  --tip-bar: 52 211 153; --tip-ink: 167 243 208;
+  --warn-bg: 60 22 24; --warn-bar: 248 113 113; --warn-ink: 254 202 202;
+  --ex-bg: 42 28 70;   --ex-bar: 167 139 250; --ex-ink: 221 214 254;
+  --mark: 250 204 21;
+}
+
+@layer base {
+  html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
+  body {
+    @apply bg-page text-ink font-sans antialiased;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+  ::selection { background: rgb(var(--brand) / 0.25); }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary { @apply btn bg-brand text-white hover:opacity-90; }
+  .btn-soft { @apply btn bg-brand-soft text-brand-ink hover:opacity-80; }
+  .btn-ghost { @apply btn text-muted hover:bg-tint; }
+  .btn-danger { @apply btn bg-red-600 text-white hover:bg-red-700; }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-md bg-brand-soft px-2 py-1 text-xs font-medium text-brand-ink;
+  }
+  .card { @apply rounded-2xl border border-line bg-surface shadow-card; }
+}
+
+/* ---------- Note content ---------- */
+.note h1 { @apply text-3xl font-bold tracking-tight leading-tight mb-3; }
+.note h2 { @apply text-xl font-bold tracking-tight mt-10 mb-3 scroll-mt-24; }
+.note h3 { @apply text-base font-semibold mt-6 mb-2; }
+.note p { @apply my-3 leading-7 text-ink/90; }
+.note ul { @apply my-3 list-disc space-y-1.5 pl-6 leading-7; }
+.note ol { @apply my-3 list-decimal space-y-1.5 pl-6 leading-7; }
+.note li::marker { @apply text-brand; }
+.note strong { @apply font-semibold text-ink; }
+.note a { @apply text-brand-ink underline underline-offset-2; }
+.note blockquote { @apply my-4 border-l-4 border-line pl-4 italic text-muted; }
+.note hr { @apply my-8 border-line; }
+.note mark {
+  background: rgb(var(--mark));
+  color: #1a1a1a;
+  @apply rounded px-1 font-medium;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.note code:not(pre code) {
+  @apply rounded bg-tint px-1.5 py-0.5 font-mono text-[0.85em];
+}
+.note pre {
+  @apply my-4 overflow-x-auto rounded-xl bg-tint p-4 font-mono text-sm leading-6;
+}
+.note table { @apply w-full border-collapse text-sm; }
+.note th {
+  @apply bg-tint px-4 py-2.5 text-left text-xs font-semibold text-muted;
+}
+.note td { @apply border-t border-line px-4 py-3 align-top; }
+
+.note-bar { height: 3px; }
+
+/* ---------- Print ---------- */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  .print-sheet { box-shadow: none !important; border: 0 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide, .animate-toast-in, .animate-pop-in { animation: none !important; }
+}
+
+/* callout ya andar text colors inherit karto */
+.note .callout p { color: inherit; @apply my-1.5; }
+.note .callout strong { color: inherit; }
+.note .callout ul, .note .callout ol { @apply my-1.5; }
+.note .callout li::marker { color: currentColor; }
