@@ -19,7 +19,7 @@ export default function Navbar({ dark, onToggleTheme }) {
             alt="AI Notes Generator logo"
             className="h-9 w-9 rounded-lg object-contain"
           />
-          <span className="hidden sm:inline">AI Notes Generator</span>
+          <span className="hidden sm:inline">NotesSpace</span>
         </Link>
 
         <nav className="flex items-center gap-1" aria-label="Main">
