@@ -1,13 +1,17 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotesProvider } from './context/NotesContext';
 import { ToastProvider } from './context/ToastContext';
 import useTheme from './hooks/useTheme';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import History from './pages/History';
 import NoteDetail from './pages/NoteDetail';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -17,10 +21,12 @@ function ScrollToTop() {
   return null;
 }
 
-// Ctrl/Cmd + K -> history madhe search focus
+// Ctrl/Cmd + K -> history madhe search focus (fakt login asel tevha)
 function GlobalShortcuts() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   useEffect(() => {
+    if (!user) return;
     const onKey = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
@@ -29,7 +35,7 @@ function GlobalShortcuts() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [navigate]);
+  }, [navigate, user]);
   return null;
 }
 
@@ -47,14 +53,18 @@ function NotFound() {
 
 function Shell() {
   const { dark, toggle } = useTheme();
+  const { pathname } = useLocation();
+  const isAuthPage = pathname === '/login' || pathname === '/register';
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar dark={dark} onToggleTheme={toggle} />
+      {!isAuthPage && <Navbar dark={dark} onToggleTheme={toggle} />}
       <main className="flex-1 pb-4">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/notes" element={<History />} />
-          <Route path="/notes/:id" element={<NoteDetail />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/notes" element={<ProtectedRoute><History /></ProtectedRoute>} />
+          <Route path="/notes/:id" element={<ProtectedRoute><NoteDetail /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
@@ -67,11 +77,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <ToastProvider>
-        <NotesProvider>
-          <ScrollToTop />
-          <GlobalShortcuts />
-          <Shell />
-        </NotesProvider>
+        <AuthProvider>
+          <NotesProvider>
+            <ScrollToTop />
+            <GlobalShortcuts />
+            <Shell />
+          </NotesProvider>
+        </AuthProvider>
       </ToastProvider>
     </BrowserRouter>
   );

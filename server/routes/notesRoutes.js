@@ -1,5 +1,7 @@
 const express = require('express');
 const upload = require('../middleware/upload');
+const requireAuth = require('../middleware/auth');
+const { generateLimiter } = require('../middleware/rateLimiters');
 const {
   createFromTopic,
   createFromUrl,
@@ -11,9 +13,11 @@ const {
 
 const router = express.Router();
 
-router.post('/topic', createFromTopic);
-router.post('/url', createFromUrl);
-router.post('/image', upload.single('image'), createFromImage);
+router.use(requireAuth); // sagle notes routes la login pahije
+
+router.post('/topic', generateLimiter, createFromTopic);
+router.post('/url', generateLimiter, createFromUrl);
+router.post('/image', generateLimiter, upload.single('image'), createFromImage);
 
 router.get('/', getNotes);
 router.get('/:id', getNoteById);

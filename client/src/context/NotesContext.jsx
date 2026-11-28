@@ -1,12 +1,16 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import * as api from '../api/notesApi';
+import { useAuth } from './AuthContext';
 
 const NotesContext = createContext(null);
 export const useNotes = () => useContext(NotesContext);
 
 export function NotesProvider({ children }) {
+  const { user } = useAuth();
+  const userId = user?.id;
+
   const [notes, setNotes] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const refresh = useCallback(async () => {
@@ -21,9 +25,17 @@ export function NotesProvider({ children }) {
     }
   }, []);
 
+  // Login zala ki tya user che notes load kar; logout zala ki sagla clear kar
   useEffect(() => {
+    if (!userId) {
+      setNotes([]);
+      setError('');
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
     refresh();
-  }, [refresh]);
+  }, [userId, refresh]);
 
   const remove = useCallback(async (id) => {
     await api.deleteNote(id);
